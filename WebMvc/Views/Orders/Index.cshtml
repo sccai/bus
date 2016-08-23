@@ -1,0 +1,141 @@
+﻿@using WebMvc.Models
+@model UserLogin
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<table class="table">
+    <button class="btn btn-primary" type="button">请登录</button>
+
+    <div class="modal" id="mymodal">
+        <div class="modal-dialog">
+            <div class="modal-content" style="max-width: 400px">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">
+                            ×
+                        </span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">用户登录</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="box">
+                        <div class="login-box">
+                            <div class="login-content ">
+                                <div class="form">
+                                    @using (Html.BeginForm("Login", "Orders", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                        <form>
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <div class="input-group">
+                                                        <span class="glyphicon glyphicon-user"></span>
+                                                        <input type="text" id="username" name="username" class="form-control" placeholder="手机号">
+
+                                                        @*<div class="col-md-12">
+                                                                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+                                                            </div>*@
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="col-xs-12">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                                                        <input type="password" id="password" name="password" class="form-control" placeholder="密码">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="col-xs-4">
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="text" id="text" name="verificationcode" class="form-control" placeholder="验证码">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <div class="input-group">
+                                                        <img src="../Orders/CheckCode?ID=1" id="imgCode" alt="单击可刷新" onclick="ClickRemoveChangeCode()" />
+                                                    </div>
+                                                </div>
+                                                @*<div class="col-xs-4">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">看不清换一张</span>
+                                                        </div>
+                                                    </div>*@
+                                                <div class="col-xs-4 link">
+                                                    <p class="text-center remove-margin">
+                                                        <a href="javascript:void(0)" onclick="ClickRemoveChangeCode();return false;"><small>看不清换一张</small></a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="ctrl">
+                                                @Html.ValidationMessage("Message")
+                                            </div>
+
+                                            <div class="form-group" style="margin-top: 50px">
+                                                @*<button type="button" class="btn btn-default btn-info col-xs-12">
+                                                        <span class="glyphicon glyphicon-off"></span>
+                                                        @Html.ActionLink("登录", "Login")
+                                                    </button>*@
+
+                                                <button type="submit" class="btn btn-default btn-info col-xs-12" value="登陆">
+                                                    <span class="glyphicon glyphicon-off"></span>登陆
+                                                </button>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="col-xs-6 link">
+                                                    <p class="text-center remove-margin">
+                                                        <small>忘记密码？</small> <a href="javascript:void(0)"><small>找回</small></a>
+                                                    </p>
+                                                </div>
+                                                <div class="col-xs-6 link">
+                                                    <p class="text-center remove-margin">
+                                                        <small>还没注册?</small> <a href="javascript:void(0)"><small>注册</small></a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    @section scripts
+        {
+        <script>
+            $(function () {
+                $(".btn").click(function () {
+                    $("#mymodal").modal("show");
+                });
+            //allow validation framework to parse DOM
+                $.validator.unobtrusive.parse('form');
+            });
+
+            function ClickRemoveChangeCode() {
+                var code = $("#imgCode").attr("src");
+                $("#imgCode").attr("src", code + "1");
+            }
+
+        </script>
+    }
+
+
+
+</table>

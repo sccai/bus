@@ -1,0 +1,139 @@
+﻿@model WebMvc.Models.UserLogin
+
+
+@{
+    ViewBag.Title = "Login";
+}
+@*<link href="//cdn.bootcss.com/bootstrap-validator/0.5.3/css/bootstrapValidator.min.css" rel="stylesheet">
+<script src="//cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>*@
+
+<div id="mymodal">
+    <div class="modal-dialog">
+        <div class="modal-content" style="max-width: 400px">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">
+                    ×
+                    </span><span class="sr-only">Close</span>
+                    </button>*@
+                <h4 class="modal-title">用户登录</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="box">
+                    <div class="login-box">
+                        <div class="login-content ">
+                            <div class="form">
+                                @using (Html.BeginForm("Login", "Orders", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                                    <form>
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                                                    @*<input type="text" id="username" name="username" class="form-control" placeholder="手机号">*@
+                                                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "手机号" })
+                                                    @*<div class="col-md-10">
+                                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                                        </div>*@
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        @*<div class="input-group">
+                                            <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                            </span>
+                                            <input type="text" class="form-control required" placeholder="用户名" id="username" name="username" data-bv-notempty data-bv-notempty-message="请输入用户名" />
+                                            </div>*@
+
+                                        @*<div class="form-group">
+                                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email"
+                                            data-bv-notempty data-bv-notempty-message="验证码不能为空">
+                                            </div>*@
+
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                                                    @*<input type="password" id="password" name="password" class="form-control" placeholder="密码">*@
+                                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "密码" })
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <div class="input-group">
+                                                    <div class="col-xs-4">
+                                                        <div class="input-group input-group-sm">
+                                                            @*<input type="text" id="text" name="verificationcode" class="form-control" placeholder="验证码">*@
+                                                            @Html.TextBoxFor(m => m.VerificationCode, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-4">
+                                                        <div class="input-group">
+                                                            <img src="../Orders/CheckCode?ID=1" id="imgCode" alt="单击可刷新" onclick="ClickRemoveChangeCode()" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-4 link">
+                                                        <p class="text-center remove-margin">
+                                                            <a href="javascript:void(0)" onclick="ClickRemoveChangeCode();return false;"><small>看不清换一张</small></a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                @Html.ValidationMessageFor(m => m.VerificationCode, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="ctrl">
+                                            @Html.ValidationMessage("Message")
+                                        </div>
+
+                                        <div class="form-group" style="margin-top: 10px">
+                                            <button type="submit" class="btn btn-default btn-info col-xs-12" value="登陆">
+                                                <span class="glyphicon glyphicon-off"></span>登陆
+                                            </button>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-xs-6 link">
+                                                <p class="text-center remove-margin">
+                                                    <small>忘记密码？</small> <a href="javascript:void(0)"><small>找回</small></a>
+                                                </p>
+                                            </div>
+                                            <div class="col-xs-6 link">
+                                                <p class="text-center remove-margin">
+                                                    <small>还没注册?</small> <a href="javascript:void(0)"><small>注册</small></a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@section scripts
+        {
+    <script>
+        function ClickRemoveChangeCode() {
+            var code = $("#imgCode").attr("src");
+            $("#imgCode").attr("src", code + "1");
+        }
+    </script>
+}

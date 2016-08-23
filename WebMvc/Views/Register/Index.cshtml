@@ -1,0 +1,115 @@
+﻿@model WebMvc.Models.UserLogin
+
+@{
+    ViewBag.Title = "用户注册";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="modal-header">
+            <h4 class="modal-title">用户注册</h4>
+        </div>
+        <div class="modal-body">
+            @*<div class="box">*@
+            @*<div class="login-box">*@
+            <div class="col-md-6 col-md-offset-3">
+                <div class="form">
+                    @using (Html.BeginForm("Login", "Orders", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                        <form>
+                            <div class="form-group">
+                                <label for="inputPhone" class="col-sm-2 control-label">手机号</label>
+                                <div class="col-xs-12">
+                                    <div class="input-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "手机号" })
+                                        </div>
+                                        @*完成验证后，可以使用该手机号码登录和找回密码*@
+                                        @*@Html.DisplayDescriptionFor(m => m.UserName)*@
+                                        <div class="input-group">
+                                            <input class="btn btn-info btn-sm" type="button" id="getcode" value="点击获取手机验证码" />
+                                            <span id="telephonenameTip"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-xs-12">
+                                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPwd" class="col-sm-2 control-label">密码</label>
+                                <div class="col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "密码" })
+                                    </div>
+                                </div>
+                                @*建议使用字母、数字和符号两种及以上的组合，6-20个字符*@
+                                <div class="col-xs-12">
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPwd" class="col-sm-2 control-label">确认密码</label>
+                                <div class="col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "确认密码" })
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="checkbox">
+                                <input id="ischange" type="checkbox" checked="checked" required />我已阅读并同意 <a href="#">《高阳商城交易条款》</a>
+                                @*@Html.CheckBox("Agreement", new {@class = "required"})*@
+                            </div>
+
+                            <div class="ctrl">
+                                @Html.ValidationMessage("Message")
+                            </div>
+                            <div class="form-group" style="margin-top: 10px">
+                                <div class="col-sm-6 col-sm-offset-2">
+                                    <button id="btnSubmit" type="submit" class="btn btn-default btn-info col-md-12" value="立即注册">
+                                        <span class="glyphicon glyphicon-user"></span>  立即注册
+                                    </button>
+
+
+                                </div>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+            @*</div>*@
+            @*</div>*@
+        </div>
+
+    </div><!-- /.modal-content -->
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(function () {
+            $("#ischange").click(function () {
+                var chkSub = $("#btnSubmit").attr('disabled');
+
+                if (chkSub == 'disabled') {
+                    $("#btnSubmit").attr('disabled', false);
+                } else {
+                    $("#btnSubmit").attr('disabled', true);
+                }
+                
+
+            });
+        });
+    </script>
+}
